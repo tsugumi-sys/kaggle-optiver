@@ -1,0 +1,15 @@
+artifact_uri: file:///home/akira/Desktop/kaggle/Competition/optiver/codes/playground/LBGM_Baseline/mlruns/1/47d2a16a2cf24d1584a63d4d27df8b5b/artifacts
+end_time: 1627555630080
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+name: ''
+run_id: 47d2a16a2cf24d1584a63d4d27df8b5b
+run_uuid: 47d2a16a2cf24d1584a63d4d27df8b5b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1627555463254
+status: 3
+tags: []
+user_id: akira

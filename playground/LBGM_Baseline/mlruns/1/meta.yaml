@@ -1,0 +1,4 @@
+artifact_location: file:///home/akira/Desktop/kaggle/Competition/optiver/codes/playground/LBGM_Baseline/mlruns/1
+experiment_id: '1'
+lifecycle_stage: active
+name: Optuna_LGBM_Baseline_model
