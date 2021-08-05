@@ -17,8 +17,13 @@ import mlflow.lightgbm
 
 
 # data directory
-#data_dir = '../input/optiver-realized-volatility-prediction/'
 data_dir = '../../../data/'
+
+# ========================
+# selected features
+# ========================
+# feature_name_file = 'features_gain_importance_50percent.csv'
+# selected_feature_names = pd.read_csv(feature_name_file)['feature_name'].values.tolist()
 
 # Function to calculate first WAP
 def calc_wap1(df):
@@ -113,7 +118,7 @@ def book_preprocessor(file_path):
     stock_id = file_path.split('=')[1]
     df_feature['row_id'] = df_feature['time_id_'].apply(lambda x: f'{stock_id}-{x}')
     df_feature.drop(['time_id_'], axis = 1, inplace = True)
-    return df_feature
+    return df_feature.loc[df_feature['log_return1_realized_volatility'] < 0.015]
 
 # Function to preprocess trade data (for each stock id)
 def trade_preprocessor(file_path):
@@ -235,7 +240,7 @@ def objective(trial):
       'min_child_samples': trial.suggest_int('min_child_samples', 5, 100),
     }
 
-    mlflow.set_experiment('Optuna_LGBM_Baseline_model')
+    mlflow.set_experiment('dropFeatures_Baseline_model')
     mlflow.lightgbm.autolog()
     with mlflow.start_run():
         mlflow.log_params(trial.params)
@@ -244,6 +249,14 @@ def objective(trial):
         x = train.drop(['row_id', 'target', 'time_id'], axis = 1)
         y = train['target']
         x_test = test.drop(['row_id', 'time_id'], axis = 1)
+
+        # ===========================
+        # Select features
+        # ===========================
+        # x = x[selected_feature_names]
+        # x_test = x_test[selected_feature_names]
+
+
         # Transform stock id to a numeric value
         x['stock_id'] = x['stock_id'].astype(int)
         x_test['stock_id'] = x_test['stock_id'].astype(int)
